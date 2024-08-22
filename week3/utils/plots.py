@@ -21,7 +21,7 @@ def initialize_subplot_grid(n_rows, n_cols, figsize=(15, 5)):
     return fig, axes
 
 def plot_monochrome_histogram(ax, img, title):
-    hist = cv2.calcHist(img)
+    hist = cv2.calcHist([img], [0], None, [256], [0, 256])
     ax.set_title(title)
     ax.set_xlabel('Intensity')
     ax.set_ylabel('Frequency of occurrence')
@@ -39,6 +39,7 @@ def plot_bgr_histogram(ax, img, title):
     """
     gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     hist_gray = cv2.calcHist([gray_image], [0], None, [256], [0, 256])
+    hist_gray, bin_edges = np.histogram(gray_image.flatten(), bins = 256, range=(0, 256))
     channels = cv2.split(img)
     colors = ['b', 'g', 'r']
 
